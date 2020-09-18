@@ -237,7 +237,7 @@ def pred_patch():
     # ------------------------------------------------------
     output = SESSION_HANDLER.get_session(bottle.request.session.id).model.run(patch, False)
     assert len(output.shape) == 3, "The model function should return an image shaped as (height, width, num_classes)"
-    assert (output.shape[2] < output.shape[0] and output.shape[2] < output.shape[1]), "The model function should return an image shaped as (height, width, num_classes)" # assume that num channels is less than img dimensions
+    #assert (output.shape[2] < output.shape[0] and output.shape[2] < output.shape[1]), "The model function should return an image shaped as (height, width, num_classes)" # assume that num channels is less than img dimensions
 
     # ------------------------------------------------------
     # Step 4

@@ -67,9 +67,11 @@ def warp_data_to_3857(src_img, src_crs, src_transform, src_bounds):
         bottom=src_bounds[1],
         right=src_bounds[2],
         top=src_bounds[3],
-        resolution=(x_res, y_res) # TODO: we use the resolution of the src_input, while this parameter needs the resolution of the destination. This will break if src_crs units are degrees instead of meters
+        resolution=(30, 30)  # resolution in meters of the imagery data
+        # resolution=(x_res, y_res) # TODO: we use the resolution of the src_input, while this parameter needs the resolution of the destination. This will break if src_crs units are degrees instead of meters
     )
 
+    print(f'--- DataLoader, src_crs is {src_crs}. width is {width}, height is {height}')
     dst_image = np.zeros((num_channels, height, width), np.float32)
     dst_image, dst_transform = rasterio.warp.reproject(
         source=src_img_tmp,
@@ -151,6 +153,7 @@ class DataLoaderCustom(DataLoader):
         f.close()
 
         src_image = np.rollaxis(src_image, 0, 3)
+
         return src_image, src_crs, src_transform, buffed_geom.bounds
 
     def get_area_from_shape_by_extent(self, extent, shape_layer):
